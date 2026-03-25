@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-navy font-sans text-text-primary;
+    margin: 0;
+  }
+}
+
+@layer components {
+  .gold-gradient {
+    background: linear-gradient(135deg, #c9a96e 0%, #d4ba8a 50%, #c9a96e 100%);
+  }
+}
+
+/* ── Scroll-reveal transitions ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children — add delay-1, delay-2, etc. */
+.reveal.delay-1 { transition-delay: 0.15s; }
+.reveal.delay-2 { transition-delay: 0.3s; }
+.reveal.delay-3 { transition-delay: 0.45s; }
+.reveal.delay-4 { transition-delay: 0.6s; }
+
+/* ── Hero entrance animations ── */
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes grow-width {
+  from { width: 0; }
+  to   { width: 8rem; }
+}
+
+.animate-fade-in-down { animation: fade-in-down 1s ease-out both; }
+.animate-fade-in-up   { animation: fade-in-up 1s ease-out both; }
+.animate-fade-in      { animation: fade-in 1s ease-out both; }
+.animate-grow-width   { animation: grow-width 1s ease-out 0.8s both; }
+
+/* ── Icon animations ── */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(8px); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes pulse-heart {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.2); }
+}
+@keyframes gentle-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-5deg); }
+  75%      { transform: rotate(5deg); }
+}
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.5); }
+  100% { box-shadow: 0 0 0 12px rgba(201, 169, 110, 0); }
+}
+
+.animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+.animate-float       { animation: float 3s ease-in-out infinite; }
+.animate-pulse-heart { animation: pulse-heart 1.5s ease-in-out infinite; }
+.animate-gentle-sway { animation: gentle-sway 4s ease-in-out infinite; }
+.animate-wiggle      { animation: wiggle 2.5s ease-in-out infinite; }
+.animate-pulse-ring  { animation: pulse-ring 1.5s ease-out infinite; }
