@@ -11,7 +11,7 @@ export type Guest = {
 export type RsvpPayload = {
   id: string;
   nombres: string[];
-  restricciones: string;
+  restricciones: string[];
 };
 
 export type GuestStatus = 'idle' | 'loading' | 'found' | 'not-found' | 'error';

@@ -7,13 +7,13 @@ import { submitRsvp } from '@/services/guestApi';
 import type { Guest } from '@/types/guest';
 import { SuccessMessage } from './SuccessMessage';
 
-type NameRow = {
+type GuestRow = {
   name: string;
+  restricciones: string;
 };
 
 type PersonalizedRsvpData = {
-  guests: NameRow[];
-  restricciones: string;
+  guests: GuestRow[];
 };
 
 type IProps = {
@@ -27,8 +27,9 @@ export const PersonalizedForm = (props: IProps) => {
   const [submitting, setSubmitting] = useState(false);
   const { ref, visible } = useScrollReveal(0);
 
-  const defaultGuests: NameRow[] = Array.from({ length: guest.asientos }, (_, i) => ({
+  const defaultGuests: GuestRow[] = Array.from({ length: guest.asientos }, (_, i) => ({
     name: i === 0 ? guest.nombre.split(' y ')[0] : '',
+    restricciones: '',
   }));
 
   const {
@@ -37,7 +38,7 @@ export const PersonalizedForm = (props: IProps) => {
     control,
     formState: { errors },
   } = useForm<PersonalizedRsvpData>({
-    defaultValues: { guests: defaultGuests, restricciones: '' },
+    defaultValues: { guests: defaultGuests },
   });
 
   const { fields } = useFieldArray({ control, name: 'guests' });
@@ -49,7 +50,7 @@ export const PersonalizedForm = (props: IProps) => {
       await submitRsvp({
         id: guest.id,
         nombres: data.guests.map((g) => g.name),
-        restricciones: data.restricciones,
+        restricciones: data.guests.map((g) => g.restricciones),
       });
       setSubmitted(true);
     } catch {
@@ -111,29 +112,29 @@ export const PersonalizedForm = (props: IProps) => {
                   </p>
                 )}
               </div>
+
+              <div className="mt-3">
+                <label
+                  htmlFor={`guests.${index}.restricciones`}
+                  className="mb-1 block text-sm font-medium text-gold-light"
+                >
+                  Restricciones alimentarias
+                </label>
+                <textarea
+                  id={`guests.${index}.restricciones`}
+                  rows={2}
+                  placeholder="Alergias, intolerancias, etc."
+                  className="w-full resize-none rounded-lg border border-gold/30 bg-navy-dark px-4 py-3 text-white placeholder-text-muted outline-none transition-colors focus:border-gold focus:ring-1 focus:ring-gold"
+                  {...register(`guests.${index}.restricciones`)}
+                />
+                {errors.guests?.[index]?.restricciones && (
+                  <p className="mt-1 text-sm text-red-400">
+                    {errors.guests[index].restricciones?.message}
+                  </p>
+                )}
+              </div>
             </div>
           ))}
-
-          <div>
-            <label
-              htmlFor="restricciones"
-              className="mb-1 block text-sm font-medium text-gold-light"
-            >
-              Restricciones alimentarias
-            </label>
-            <textarea
-              id="restricciones"
-              rows={3}
-              placeholder="Alergias, intolerancias, etc."
-              className="w-full resize-none rounded-lg border border-gold/30 bg-navy-dark px-4 py-3 text-white placeholder-text-muted outline-none transition-colors focus:border-gold focus:ring-1 focus:ring-gold"
-              {...register('restricciones', {
-                required: 'Por favor indica las restricciones alimentarias',
-              })}
-            />
-            {errors.restricciones && (
-              <p className="mt-1 text-sm text-red-400">{errors.restricciones.message}</p>
-            )}
-          </div>
 
           {submitError && (
             <p className="text-center text-sm text-red-400">

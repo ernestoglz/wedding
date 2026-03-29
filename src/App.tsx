@@ -10,7 +10,6 @@ import { MusicPlayer } from '@/components/MusicPlayer';
 import { Footer } from '@/components/Footer';
 import { GuestWelcome } from '@/components/GuestWelcome';
 import { GuestLoading } from '@/components/GuestLoading';
-import { GuestNotFound } from '@/components/GuestNotFound';
 import { useGuest } from '@/hooks/useGuest';
 
 export function App() {

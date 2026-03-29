@@ -33,7 +33,7 @@ export const EventCard = (props: IProps) => {
       <p className="mt-1 text-lg font-semibold text-gold">{event.time}</p>
       <div className="my-4 h-px w-16 bg-gold/30" />
       <p className="font-serif text-lg text-white">{event.venue}</p>
-      <p className="mt-1 text-sm text-text-muted">{event.address}</p>
+      <p className="mt-1 text-center text-sm text-text-muted">{event.address}</p>
       <a
         href={event.mapsUrl}
         target="_blank"
